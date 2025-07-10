@@ -1,0 +1,104 @@
+/* Dans votre fichier de styles */
+button[mat-mini-fab] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,0.1), 
+                0 2px 3px -1px rgba(0,0,0,0.06);
+  
+    &.enabled {
+      background-color: blue; /* Vert */
+      color: white;
+      
+      &:hover {
+        background-color: #3d8b40;
+        transform: scale(1.1);
+      }
+    }
+  
+    &.disabled {
+      background-color: gray; /* Rouge */
+      color: white;
+      
+      &:hover {
+        background-color: green;
+        transform: scale(1.1);
+      }
+    }
+  
+    .icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  
+    &:disabled {
+      opacity: 0.6;
+      transform: none !important;
+    }
+  }
+  Dans votre fichier CSS
+.autocomplete-name-list {
+  position: absolute;
+  z-index: 20; /* Assurez-vous qu'il est au-dessus du tableau */
+  margin-top: 0.25rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  width: 12rem;
+  /* Ajuster top et left en fonction de la position de l'input de nom */
+  top: 80px; /* Valeur approximative, ajuster selon votre layout */
+  left: 20px; /* Valeur approximative, ajuster selon votre layout */
+}
+
+.autocomplete-email-list {
+  position: absolute;
+  z-index: 20; /* Assurez-vous qu'il est au-dessus du tableau */
+  margin-top: 0.25rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  width: 12rem;
+  /* Ajuster top et left en fonction de la position de l'input d'email */
+  top: 80px; /* Valeur approximative, ajuster selon votre layout */
+  left: 200px; /* Valeur approximative, ajuster selon votre layout */
+}
+.absolute.z-10.mt-1.bg-white.border.border-gray-300.rounded-md.shadow-lg.w-48 {
+  /* ... autres styles ... */
+  z-index: 1000; /* Valeur très élevée */
+  transform: translateZ(0); /* Crée un nouveau contexte de superposition */
+}
+
+
+.custom-mat-form-field {
+  max-width: 180px !important; 
+}
+
+.custom-mat-form-field-height {
+  height: 3.5rem !important; 
+
+}
+mat-form-field.small {
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 8px;
+font-size: xx-small; 
+
+}
+/* Style pour le spinner de publication */
+.publishing-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Style pour le bouton de publication */
+.mat-spinner {
+  margin: 0 auto;
+}

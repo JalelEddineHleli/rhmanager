@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenue</title>
+
+</head>
+<body>
+<div class="header">User registered. Awaiting admin activation.</div>
+<p>Bonjour <span th:text="${firstName}"></span>,</p>
+<p>Votre compte a été créé avec succès.</p>
+<p>Votre mot de passe temporaire est : <strong th:text="${password}"></strong></p>
+<p>Veuillez changer votre mot de passe après votre première connexion.</p>
+<p>Cordialement,<br>L'équipe de support</p>
+</body>
+</html>

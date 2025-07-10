@@ -1,0 +1,78 @@
+<div class="bg-background relative">
+  <div class="mx-auto px-5 bg-gray-100 ">
+    <div class="flex items-center  justify-between py-3.5 md:justify-start">
+      <!-- Mobile Navigation Menu Button-->
+      <div class="sm:order-1 md:hidden">
+        <button
+          (click)="toggleMobileMenu()"
+          type="button"
+          class="bg-muted text-muted-foreground focus:ring-primary hover:bg-muted-foreground hover:text-muted inline-flex items-center justify-center rounded-md p-2 focus:outline-hidden focus:ring-2 focus:ring-inset"
+          aria-expanded="false">
+          <span class="sr-only">Open menu</span>
+          <svg-icon src="assets/icons/heroicons/outline/menu.svg" [svgClass]="'h-6 w-6'"></svg-icon>
+        </button>
+      </div>
+
+      <!-- Logo -->
+      <!-- <div class="flex items-center justify-start sm:order-2 md:mr-10 lg:hidden">
+        <a class="bg-primary flex items-center justify-center rounded-sm p-2 focus:outline-hidden focus:ring-1">
+          <svg-icon src="assets/icons/logoo.svg"></svg-icon>
+        </a>
+        <b class="text-foreground hidden pl-3 text-sm font-bold sm:block"> RH Template </b>
+      </div> -->
+      <div class="flex items-center  justify-start sm:order-2 md:mr-10 lg:hidden">
+        <a class="bg-primary flex items-center justify-center rounded-sm p-2 focus:outline-hidden focus:ring-1">
+          <svg-icon
+            src="assets/icons/logoo.svg"
+            [svgClass]="'h-8 w-8'"> </svg-icon>
+        </a>
+        <b class="text-foreground hidden pl-3 text-sm font-bold sm:block"> RH Template </b>
+      </div>
+
+      <!-- Desktop Menu -->
+      <div class="hidden space-x-10 sm:order-3 md:flex">
+        <app-navbar-menu></app-navbar-menu>
+      </div>
+
+      <!-- Profile menu -->
+      <div class="relative items-center justify-end sm:order-4 md:flex md:flex-1 lg:w-0">
+        <h1 class="mr-2 text-sm font-semibold md:text-base">
+          {{ profileData?.firstName }} {{ profileData?.lastName }}
+        </h1>
+
+        <!-- Notification Icon -->
+        <button  *ngIf="!isSuperAdmin && notificationAccess"
+        (click)="openNotifications()" class="relative mr-4 focus:outline-none">
+          <svg-icon src="assets/icons/heroicons/outline/bell.svg" [svgClass]="'h-6 w-6 text-gray-600 hover:text-black'"></svg-icon>
+          <span *ngIf="notificationCount > 0" class="absolute -top-1 -right-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+            {{ unreadNotificationCount }}
+          </span>
+        </button>
+
+        <!-- Dropdown Notification Panel -->
+        <div *ngIf="showNotifications" class="absolute right-0 top-full mt-2 w-80 rounded-md border bg-white shadow-lg z-50 max-h-96 overflow-y-auto">
+          <div class="bg-yellow-50 p-2 text-xs">
+            <div>Dernière mise à jour: {{ lastUpdate | date:'HH:mm:ss.SSS' }}</div>
+            <div>Nombre: {{ notif.length }}</div>
+          </div>
+          <div class="p-4">
+            <h2 class="mb-2 text-lg font-semibold">Notifications ({{ unreadNotificationCount }})</h2>
+            <div *ngIf="notif.length === 0" class="py-2 text-sm text-gray-500">Aucune notification</div>
+            <ul class="divide-y divide-gray-200">
+              <li *ngFor="let n of notif; trackBy: trackByNotification" class="py-3 px-2 hover:bg-gray-50">
+                <div class="text-sm">{{ n.message }}</div>
+                <div class="text-xs text-gray-500 mt-1">{{ n.timestamp | date:'short' }}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      
+        <app-profile-menu></app-profile-menu>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <app-navbar-mobile></app-navbar-mobile>
+</div>
+

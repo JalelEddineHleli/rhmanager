@@ -1,0 +1,143 @@
+<div class="p-4 sm:p-6 bg-gray-50 min-h-screen">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+    <div class="mb-4 sm:mb-0">
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-800">Dashboard</h1>
+      <!-- <p class="text-gray-600 text-sm md:text-base">Statistiques clés et performances de votre activité</p> -->
+    </div>
+    <div class="flex items-center space-x-2">
+      <!-- <button mat-stroked-button class="text-sm">
+        <mat-icon class="mr-1 text-base">calendar_today</mat-icon>
+        <span>Période actuelle</span>
+
+     
+
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="flex justify-center items-center h-64">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="space-y-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div *ngFor="let stat of stats" class="bg-white rounded-lg shadow-sm p-4 border border-gray-100 transition-shadow hover:shadow-md">
+        <a [routerLink]="stat.route" class="block">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-gray-500 text-xs font-medium uppercase">{{stat.title}}</p>
+              <h3 class="text-xl font-bold mt-1 text-gray-800">{{stat.count | number}}</h3>
+            </div>
+            <div class="p-2 rounded-full {{stat.color}} flex items-center justify-center">
+              <mat-icon class="text-xl">{{stat.icon}}</mat-icon>
+            </div>
+          </div>
+
+          <div class="mt-3 flex items-center justify-between">
+            <div class="flex items-center">
+              <mat-icon [class]="getTrendColor(stat.trend)" class="text-sm mr-1">
+                {{getTrendIcon(stat.trend)}}
+              </mat-icon>
+              <span *ngIf="stat.new !== undefined && stat.new !== null" [class]="getTrendColor(stat.trend)" class="text-xs">
+                {{stat.new > 0 ? '+' : ''}}{{stat.new | number}} ce mois
+              </span>
+              <span *ngIf="stat.new === undefined || stat.new === null" class="text-gray-500 text-xs">
+                <span *ngIf="stat.trend === 'stable'">Stable</span>
+                <span *ngIf="stat.trend !== 'stable'">N/A</span>
+              </span>
+            </div>
+
+            <div *ngIf="stat.percentage !== undefined" class="text-xs font-medium text-blue-600">
+              {{stat.percentage | number:'1.0-1'}}%
+            </div>
+          </div>
+          <p *ngIf="stat.description" class="text-gray-400 text-xs mt-2 leading-tight">{{stat.description}}</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
+      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex items-center justify-center min-h-[120px] lg:col-span-1"
+           [ngClass]="{
+             'bg-green-50 border-green-200': keyInsight?.type === 'success',
+             'bg-red-50 border-red-200': keyInsight?.type === 'warning',
+             'bg-blue-50 border-blue-200': keyInsight?.type === 'info'
+           }">
+        <ng-container *ngIf="keyInsight; else noKeyInsight">
+          <mat-icon class="text-4xl mr-4"
+                    [ngClass]="{
+                      'text-green-600': keyInsight.type === 'success',
+                      'text-red-600': keyInsight.type === 'warning',
+                      'text-blue-600': keyInsight.type === 'info'
+                    }">{{ keyInsight.icon }}</mat-icon>
+          <p class="text-lg font-medium"
+             [ngClass]="{
+               'text-green-800': keyInsight.type === 'success',
+               'text-red-800': keyInsight.type === 'warning',
+               'text-blue-800': keyInsight.type === 'info'
+             }">{{ keyInsight.message }}</p>
+        </ng-container>
+        <ng-template #noKeyInsight>
+          <mat-icon class="text-4xl mr-4 text-gray-500">info</mat-icon>
+          <p class="text-lg font-medium text-gray-700">Aucune recommandation spécifique pour le moment. Tout est sous contrôle !</p>
+        </ng-template>
+      </div>
+
+      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 lg:col-span-2 flex flex-col min-h-[300px]">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          Top Prospects Engagés
+          <mat-icon class="text-yellow-500 align-middle ml-1 text-base">star</mat-icon>
+        </h2>
+        <div *ngIf="topProspects.length > 0; else noTopProspects" class="overflow-y-auto space-y-3 flex-grow">
+          <div *ngFor="let prospect of topProspects" class="flex items-center p-3 rounded-lg bg-blue-50 border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer" [routerLink]="['/components/prospect', prospect.id]">
+            <div class="flex-shrink-0 bg-blue-200 text-blue-700 rounded-full w-9 h-9 flex items-center justify-center font-bold text-base">
+              {{ prospect.nom.charAt(0).toUpperCase() }}
+            </div>
+            <div class="flex-grow ml-3">
+              <p class="text-sm font-semibold text-gray-800">{{ prospect.nom }}</p>
+              <p class="text-xs text-gray-600">Interactions: <span class="font-bold text-blue-700">{{ prospect.interactionCount }}</span></p>
+            </div>
+            <mat-icon class="text-blue-500 text-lg">chevron_right</mat-icon>
+          </div>
+        </div>
+        <ng-template #noTopProspects>
+          <div class="text-center text-gray-500 py-4 flex-grow flex flex-col justify-center items-center">
+            <mat-icon class="text-gray-400 text-4xl mb-2">sentiment_dissatisfied</mat-icon>
+            <p class="text-sm">Aucun prospect avec des interactions significatives pour le moment.</p>
+            <p class="text-xs mt-1">Commencez à interagir pour identifier vos leaders!</p>
+          </div>
+        </ng-template>
+        <p class="text-gray-500 text-xs mt-auto text-center pt-2">Ces prospects ont montré le plus d'engagement, contactez-les en priorité.</p>
+      </div>
+    </div> -->
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
+      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex flex-col min-h-[350px]">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Évolution des Clients par Interactions</h2>
+        <div class="flex-grow flex items-center justify-center">
+          <p-chart type="line" [data]="clientsByInteractionsData" [options]="clientsByInteractionsOptions" class="w-full h-full"></p-chart>
+        </div>
+        <p class="text-gray-500 text-sm mt-2 text-center">Tendance de croissance du nombre de clients sur la base des interactions.</p>
+      </div>
+
+      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex flex-col min-h-[350px]">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-800 mb-4">Statut des Affaires Personnelles</h2>
+          <div class="flex-grow flex items-center justify-center h-56 md:h-64">
+            <p-chart type="pie" [data]="offerStatusPieData" [options]="offerStatusPieOptions" class="w-full h-full"></p-chart>
+          </div>
+        </div>
+        <p class="text-gray-500 text-sm mt-2 text-center">Répartition de toutes les affaires personnelles par statut.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1">
+      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex flex-col min-h-[350px]">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Activité Mensuelle Clé</h2>
+        <div class="flex-grow flex items-center justify-center">
+          <p-chart type="bar" [data]="monthlyActivityData" [options]="monthlyActivityOptions" class="w-full h-full"></p-chart>
+        </div>
+        <p class="text-gray-500 text-sm mt-2 text-center">Tendance des nouveaux prospects, clients, affaires et sondages envoyés par mois.</p>
+      </div>
+    </div>
+  </div>
+</div>

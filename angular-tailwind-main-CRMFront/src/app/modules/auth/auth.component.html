@@ -1,0 +1,22 @@
+<div class="flex h-screen w-screen">
+  <div class="auth-bg bg-blue-100 hidden flex-1 items-center justify-center bg-cover lg:flex">
+    <div class="max-w-2xl space-y-4 p-8 text-center text-white ">
+      <img src="./assets/images/360_F_406029666_HXoRQoU8ojjpcDiSKRSe34DOF5EIyeP5.jpg" alt="dashboard widget"  class=""/>
+      <!-- <h1 class="text-4xl font-bold">"Customer Relationship Management"</h1> -->
+    
+    </div>
+  </div>
+  <div class="bg-background flex flex-1 items-center justify-center">
+    <div class="max-w-md overflow-y-auto px-4 sm:w-[500px]">
+      <!-- logo -->
+      <div class="flex items-center justify-center">
+        <a class="bg-primary rounded-sm p-2">
+          <svg-icon src="assets/icons/logo.svg" [svgClass]="'h-5 w-5'"> </svg-icon>
+        </a>
+        <b class="text-md text-foreground pl-3 font-bold"> RH Template </b>
+      </div>
+      <!-- Route -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

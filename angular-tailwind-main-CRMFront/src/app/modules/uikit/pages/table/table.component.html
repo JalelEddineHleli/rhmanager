@@ -1,0 +1,187 @@
+<div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 text-sm">
+  <div class="flex flex-wrap items-center justify-between gap-2 p-4 bg-gradient-to-r from-indigo-50 to-purple-50">
+      <div class="flex flex-wrap items-center gap-2">
+
+          <div class="relative">
+              <div class="absolute left-2 top-1/2 transform -translate-y-1/2 z-10">
+                  <mat-icon class="text-gray-500 text-sm" matTooltip="Rechercher par nom ou prénom">search</mat-icon>
+              </div>
+              <input
+                  class="py-1.5 pl-8 pr-3 h-10 md:w-45 border  border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 w-40 text-sm"
+                  placeholder="Nom / Prénom"
+                  type="text"
+                  [(ngModel)]="searchQuery"
+                  (input)="onSearchInputChange($any($event.target).value)"
+              />
+              <div *ngIf="showAutocompleteName && autocompleteResultsName.length > 0"
+                  class="absolute z-50 h-10 md:w-45 mt-1 bg-white border border-gray-300 rounded-md shadow-md w-40">
+                  <ul class="py-1 text-gray-700">
+                      <li *ngFor="let user of autocompleteResultsName"
+                          (click)="selectAutocompleteNameResult(user)"
+                          class="px-3 py-1 hover:bg-gray-100 cursor-pointer">
+                          {{ user.firstName }} {{ user.lastName }}
+                      </li>
+                  </ul>
+              </div>
+          </div>
+
+          <div class="relative">
+            <div class="absolute left-2  top-1/2 transform -translate-y-1/2">
+                <mat-icon class="text-gray-500 text-sm" matTooltip="Filtrer par email">email</mat-icon>
+            </div>
+            <input
+            class="py-1.5 pl-8 pr-3 h-10 md:w-45 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 w-96 text-sm"
+            placeholder="Email"
+            type="text"
+            [(ngModel)]="emailFilter"
+            (input)="onEmailInputChange($any($event.target).value)"
+        />
+            <div *ngIf="showAutocompleteEmail && autocompleteResultsEmail.length > 0" class="absolute z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-md w-80">
+                <ul class="py-1 text-gray-700">
+                    <li *ngFor="let user of autocompleteResultsEmail" (click)="selectAutocompleteEmailResult(user)" class="px-3 py-1 hover:bg-gray-100 cursor-pointer">
+                        {{ user.email }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Filtre par statut -->
+<div class="relative">
+    <mat-form-field appearance="outline" class="bg-white w-45 h-10 small text-sm ">
+      <mat-label>Statut</mat-label>
+      <mat-select [(value)]="enabledFilter">
+        <mat-option [value]="null">Tous</mat-option>
+        <mat-option [value]="true">Activé</mat-option>
+        <mat-option [value]="false">Désactivé</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+
+        <div class=" relative bg-white ">
+            <mat-form-field appearance="outline" class=" bg-white w-45 h-10 small text-sm   ">
+              <mat-label>Période</mat-label>
+              <mat-date-range-input   [rangePicker]="picker" [formGroup]="dateRange">
+                <input matStartDate placeholder="Début" formControlName="start">
+                <input matEndDate placeholder="Fin" formControlName="end">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+            </div>
+
+          <div class="flex gap-1">
+              <button
+                  class="flex items-center gap-1 py-1.5  h-10 md:w-45 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-all duration-200 text-sm"
+                  (click)="onAdvancedSearch()"
+                  matTooltip="Lancer la recherche">
+                  <mat-icon class="text-white text-sm">search</mat-icon>
+                  Chercher
+              </button>
+
+              <button
+                  class="flex items-center gap-1  h-10 md:w-45 py-1.5 px-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300 transition-all duration-200 text-sm"
+                  (click)="resetFilters()"
+                  matTooltip="Réinitialiser les filtres">
+                  <mat-icon class="text-gray-700 text-sm">refresh</mat-icon>
+                  Réinitialiser
+              </button>
+          </div>
+      </div>
+      <!-- Dans table.component.html, près des autres boutons de filtres -->
+      <div class="flex justify-end w-full">
+        <button
+          class="flex items-center gap-1 py-1.5 h-10 px-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all duration-200 text-sm"
+          (click)="openAddUserModal()"
+          matTooltip="Ajouter un nouvel utilisateur"
+        >
+          <mat-icon class="text-white text-sm">add</mat-icon>
+          Ajouter
+        </button>
+      </div>
+
+  </div>
+  <div class="overflow-x-auto">
+      <table class="w-full bg-white">
+          <thead class="bg-gradient-to-r from-indigo-600 to-purple-600 text-sm">
+              <tr>
+                 
+                  <th class="p-2 text-left font-semibold text-white">Utilisateur</th>
+                  <th class="p-2 text-left font-semibold text-white">Email</th>
+                  <th class="p-2 text-left font-semibold text-white">Téléphone</th>
+                  <th class="p-2 text-left font-semibold text-white">Adresse</th>
+                  <th class="p-2 text-left font-semibold text-white">Date création</th>
+                  <th class="p-2 text-left font-semibold text-white">Rôles</th>
+                  <th class="p-2 text-center font-semibold text-white">Actions</th>
+              </tr>
+          </thead>
+          <tbody class="text-sm">
+              <tr
+                  *ngFor="let user of users"
+                  class="hover:bg-gray-50 transition-all duration-200 border-b border-gray-100">
+                  <td class="p-2 text-gray-700">{{ user.firstName +" " + user.lastName }}</td>
+              
+                  <td class="p-2 text-gray-700">{{ user.email }}</td>
+                  <td class="p-2 text-gray-700">{{ user.phone }}</td>
+                  <td class="p-2 text-gray-700">{{ user.address }}</td>
+                  <td class="p-2 text-gray-700">{{ user.createdAt }}</td>
+                  <td class="p-2">
+                      <div class="flex flex-wrap gap-1">
+                          <span
+                              *ngFor="let role of user.roles"
+                              class="px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded-full text-xs font-medium">
+                              {{ role.role }}
+                          </span>
+                      </div>
+                  </td>
+                  <td class="p-2 text-center">
+                    <button mat-mini-fab
+                      [class.enabled]="user.enabled"
+                      [class.disabled]="!user.enabled || userActionLoading[user.uuid]"
+                      (click)="toggleUserStatus(user)"
+                      [disabled]="loading || userActionLoading[user.uuid]"
+                      matTooltip="{{user.enabled ? 'Désactiver l\'utilisateur' : 'Activer l\'utilisateur'}}"
+                      aria-label="Changer le statut de l'utilisateur">
+                      <mat-icon class="icon text-xs">{{user.enabled ? 'toggle_on' : 'toggle_off'}}</mat-icon>
+                    </button>
+                    <mat-spinner *ngIf="userActionLoading[user.uuid]" diameter="20"></mat-spinner>
+                  </td>
+              </tr>
+              <tr *ngIf="users.length === 0">
+                  <td class="py-3 text-center text-gray-500" colspan="7">Aucun utilisateur trouvé</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+
+  <div class="flex items-center justify-between p-4 border-t border-gray-100 text-sm">
+      <div class="flex items-center gap-2 text-gray-600">
+          Afficher
+          <select
+              class="border border-gray-300 rounded-md p-1.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-sm"
+              (change)="onPageSizeChange($event)">
+              <option value="1">1</option>
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+          </select>
+          par page
+      </div>
+      <div class="flex items-center gap-2">
+          <button
+              class="p-1.5 rounded-md bg-gray-100 hover:bg-gray-200 transition-all duration-200 disabled:opacity-50"
+              (click)="onPageChange(currentPage - 1)"
+              [disabled]="currentPage === 0">
+              <mat-icon class="h-4 w-4 text-gray-600 text-sm">chevron_left</mat-icon>
+          </button>
+          <span class="text-gray-600">{{ (currentPage * pageSize) + 1 }}-{{ (currentPage + 1) * pageSize }} sur {{ totalElements }}</span>
+          <button
+              class="p-1.5 rounded-md bg-gray-100 hover:bg-gray-200 transition-all duration-200 disabled:opacity-50"
+              (click)="onPageChange(currentPage + 1)"
+              [disabled]="currentPage === totalPages - 1">
+              <mat-icon class="h-4 w-4 text-gray-600 text-sm">chevron_right</mat-icon>
+          </button>
+      </div>
+  </div>
+
+</div>

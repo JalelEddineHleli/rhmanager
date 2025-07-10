@@ -1,0 +1,201 @@
+<div class="relative p-6">
+    <button
+      type="button"
+      (click)="onCancel()"
+      class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+      aria-label="Close"
+    >
+      <svg
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        ></path>
+      </svg>
+    </button>
+  
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="my-6 space-y-4">
+      <div class="text-center">
+        <h2 class="text-gray-800 mb-1 text-2xl font-semibold">Ajouter un nouvel utilisateur</h2>
+        <p class="text-gray-500 text-xs">Veuillez remplir les informations ci-dessous</p>
+      </div>
+  
+      <div class="relative">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="user.email"
+          class="peer block w-full h-11 px-2 pb-1 pt-5 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+          placeholder=" "
+          required
+          email
+          #emailControl="ngModel"
+        />
+        <label
+          for="email"
+          class="absolute left-2 top-1 text-gray-500 text-xs bg-white px-1 transition-all duration-200 ease-in-out
+                 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                 peer-focus:top-1 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-blue-600 peer-focus:left-1"
+        >
+          Email
+        </label>
+        <div *ngIf="emailControl.invalid && (emailControl.dirty || emailControl.touched)" class="text-red-500 text-xs mt-1">
+          <div *ngIf="emailControl.errors?.['required']">L'email est requis.</div>
+          <div *ngIf="emailControl.errors?.['email']">Format d'email invalide.</div>
+        </div>
+      </div>
+  
+      <div class="flex gap-4">
+        <div class="relative w-1/2">
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            [(ngModel)]="user.firstName"
+            class="peer block w-full h-11 px-2 pb-1 pt-5 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+            placeholder=" "
+            required
+            #firstNameControl="ngModel"
+          />
+          <label
+            for="firstName"
+            class="absolute left-2 top-1 text-gray-500 text-xs bg-white px-1 transition-all duration-200 ease-in-out
+                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                   peer-focus:top-1 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-blue-600 peer-focus:left-1"
+          >
+            Prénom
+          </label>
+          <div *ngIf="firstNameControl.invalid && (firstNameControl.dirty || firstNameControl.touched)" class="text-red-500 text-xs mt-1">
+            Le prénom est requis.
+          </div>
+        </div>
+  
+        <div class="relative w-1/2">
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            [(ngModel)]="user.lastName"
+            class="peer block w-full h-11 px-2 pb-1 pt-5 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+            placeholder=" "
+            required
+            #lastNameControl="ngModel"
+          />
+          <label
+            for="lastName"
+            class="absolute left-2 top-1 text-gray-500 text-xs bg-white px-1 transition-all duration-200 ease-in-out
+                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                   peer-focus:top-1 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-blue-600 peer-focus:left-1"
+          >
+            Nom
+          </label>
+          <div *ngIf="lastNameControl.invalid && (lastNameControl.dirty || lastNameControl.touched)" class="text-red-500 text-xs mt-1">
+            Le nom est requis.
+          </div>
+        </div>
+      </div>
+  
+      <div class="relative">
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          [(ngModel)]="user.phone"
+          class="peer block w-full h-11 px-2 pb-1 pt-5 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+          placeholder=" "
+          pattern="[0-9]{8}"
+          maxlength="8"
+          #phoneControl="ngModel"
+        />
+        <label
+          for="phone"
+          class="absolute left-2 top-1 text-gray-500 text-xs bg-white px-1 transition-all duration-200 ease-in-out
+                 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                 peer-focus:top-1 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-blue-600 peer-focus:left-1"
+        >
+          Téléphone
+        </label>
+        <div *ngIf="phoneControl.invalid && (phoneControl.dirty || phoneControl.touched)" class="text-red-500 text-xs mt-1">
+          <div *ngIf="phoneControl.errors?.['pattern']">Format de téléphone invalide (8 chiffres).</div>
+        </div>
+      </div>
+  
+      <div class="relative">
+        <input
+          type="text"
+          id="address"
+          name="address"
+          [(ngModel)]="user.address"
+          class="peer block w-full h-11 px-2 pb-1 pt-5 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
+          placeholder=" "
+          #addressControl="ngModel"
+        />
+        <label
+          for="address"
+          class="absolute left-2 top-1 text-gray-500 text-xs bg-white px-1 transition-all duration-200 ease-in-out
+                 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                 peer-focus:top-1 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-blue-600 peer-focus:left-1"
+        >
+          Adresse
+        </label>
+      </div>
+  
+      <label class="block text-gray-500 text-sm mb-1">Rôles</label>
+      <mat-select
+        [(value)]="user.roles"
+        multiple
+        required
+        #roleControl="ngModel"
+        name="roles"
+        ngModel
+        class="w-full border border-gray-300 rounded-md p-1 focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Sélectionnez un ou plusieurs rôles"
+      >
+        <mat-option *ngFor="let role of roless" [value]="role">
+          {{ role.role }}
+        </mat-option>
+      </mat-select>
+      <div *ngIf="roleControl.invalid && (roleControl.dirty || roleControl.touched)" class="text-red-500 text-xs mt-1">
+        Le rôle est requis.
+      </div>
+  
+      <!-- <div class="flex items-center space-x-2 text-sm mt-4">
+        <input
+          id="enabled"
+          name="enabled"
+          type="checkbox"
+          [(ngModel)]="user.enabled"
+          class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+        />
+        <label for="enabled" class="font-medium text-gray-700">Compte activé</label>
+      </div> -->
+  
+      <div class="flex justify-end space-x-2 mt-6">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+        >
+          Annuler
+        </button>
+        <button
+          type="submit"
+          [disabled]="registerForm.invalid || isLoading"
+          class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+        >
+          <span *ngIf="!isLoading">Ajouter</span>
+          <svg *ngIf="isLoading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>

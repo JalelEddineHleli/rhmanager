@@ -1,0 +1,54 @@
+<div class="p-6">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold">Départements</h2>
+    <button (click)="openModal()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      + Ajouter
+    </button>
+  </div>
+
+  <!-- Ajouter Département Modal -->
+<app-ajouter-department
+  *ngIf="showAddModal"
+  (close)="showAddModal = false"
+  (save)="handleAdd($event)">
+</app-ajouter-department>
+
+  
+
+  <!-- Modifier Département Modal -->
+  <app-modifier-department
+    *ngIf="selectedDepartment"
+    [department]="selectedDepartment"
+    (close)="selectedDepartment = null"
+    (save)="handleUpdate($event)">
+  </app-modifier-department>
+
+  <!-- Tableau des départements -->
+  <table class="min-w-full bg-white border">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="text-left p-3 border-b">Nom</th>
+        <th class="text-left p-3 border-b">Description</th>
+        <th class="text-left p-3 border-b">Chef de département</th>
+        <th class="text-left p-3 border-b">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dept of departments" class="hover:bg-gray-50">
+        <td class="p-3 border-b">{{ dept.name }}</td>
+        <td class="p-3 border-b">{{ dept.description }}</td>
+        <td class="p-3 border-b">
+          {{ dept.departmentHead?.firstName }} {{ dept.departmentHead?.lastName || 'Non défini' }}
+        </td>
+        <td class="p-3 border-b flex space-x-4 items-center">
+          <button (click)="editDepartment(dept)" class="p-1 text-blue-600 hover:text-blue-800">
+            ✏️
+          </button>
+          <button (click)="deleteDepartment(dept.id!)" class="p-1 text-red-600 hover:text-red-800">
+            🗑️
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

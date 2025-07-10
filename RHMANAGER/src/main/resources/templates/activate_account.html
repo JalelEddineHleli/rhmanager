@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activation de votre compte</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .header {
+            background-color: #3730a3;
+            color: #ffffff;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px 8px 0 0;
+        }
+        .content {
+            padding: 20px;
+            color: #1e293b;
+            font-size: 16px;
+        }
+        .info {
+            font-size: 18px;
+            font-weight: bold;
+            color: #dc2626;
+            margin: 20px 0;
+        }
+        .activation-link a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #3730a3;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .activation-link a:hover {
+            background-color: #4f46e5;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">Votre compte est prêt – Détails pour vous connecter</div>
+    <div class="content">
+        <p>Bonjour <span th:text="${username}"></span>,</p>
+        <p>Votre compte a été créé avec succès.</p>
+        <p><strong>Email :</strong> <span th:text="${email}"></span></p>
+        <p><strong>Votre mot de passe temporaire est :</strong> <span class="info" th:text="${password}"></span></p>
+        <p>Vous pouvez vous connecter en cliquant sur le bouton ci-dessous :</p>
+        <div class="activation-link">
+            <a th:href="${resetPasswordLink}" target="_blank">Cliquez ici pour réinitialiser votre mot de passe</a>
+        </div>
+    </div>
+    <div class="footer">
+        <p>© 2025 WIND ERP. Tous droits réservés.</p>
+    </div>
+</div>
+</body>
+</html>

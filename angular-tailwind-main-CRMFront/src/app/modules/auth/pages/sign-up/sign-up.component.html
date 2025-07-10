@@ -1,0 +1,184 @@
+<form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="my-6 space-y-4">
+  <div class="text-center">
+    <h2 class="text-foreground mb-1 text-2xl font-semibold">Inscription <span class="text-primary">!</span></h2>
+    <!-- <p class="text-muted-foreground text-xs">Commençons votre essai gratuit de 30 jours</p> -->
+  </div>
+<!-- 
+  <div routerLink="/dashboard">
+    <app-button full impact="bold" tone="light" shape="rounded" size="medium">
+      <svg-icon src="assets/icons/google-logo.svg" [svgClass]="'h-6 w-6 mr-2'"></svg-icon>
+      S'inscrire avec Google
+    </app-button>
+  </div>
+
+  <div class="my-2 flex items-center before:flex-1 before:border-t after:flex-1 after:border-t">
+    <p class="text-muted-foreground mx-2 mb-0 text-center text-xs">ou</p>
+  </div> -->
+
+  <div class="space-y-2 text-left">
+    <div class="relative">
+      <input
+        type="text"
+        id="email"
+        [(ngModel)]="user.email"
+        name="email"
+        class="peer block w-full h-9 px-2 py-1.5"
+        placeholder=" "
+        required
+        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+(\.[a-zA-Z]{2,})?"
+        #emailControl="ngModel"
+      />
+      <label
+        for="email"
+        class="bg-background text-muted-foreground text-xs peer-focus:text-primary absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform px-1 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95"
+      >
+        Adresse e-mail
+      </label>
+       <div *ngIf="emailControl.invalid && (emailControl.dirty || emailControl.touched)" class="text-red-500 text-xs mt-1">
+        <div *ngIf="emailControl.errors?.['required']">L'email est requis.</div>
+        <div *ngIf="emailControl.errors?.['pattern']">Format d'email invalide.</div>
+      </div>
+    </div>
+
+    <div class="flex gap-4">
+      <div class="relative w-1/2">
+        <input
+          type="text"
+          id="firstName"
+          [(ngModel)]="user.firstName"
+          name="firstName"
+          class="peer block w-full h-9 px-2 py-1.5"
+          placeholder=" "
+          required
+          #firstNameControl="ngModel"
+        />
+        <label
+          for="firstName"
+          class="bg-background text-muted-foreground text-xs peer-focus:text-primary absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform px-1 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95"
+        >
+          Prénom
+        </label>
+         <div *ngIf="firstNameControl.invalid && (firstNameControl.dirty || firstNameControl.touched)" class="text-red-500 text-xs mt-1">
+          Le prénom est requis.
+        </div>
+      </div>
+      <div class="relative w-1/2">
+        <input
+          type="text"
+          id="lastName"
+          [(ngModel)]="user.lastName"
+          name="lastName"
+          class="peer block w-full h-9 px-2 py-1.5"
+          placeholder=" "
+          required
+          #lastNameControl="ngModel"
+        />
+        <label
+          for="lastName"
+          class="bg-background text-muted-foreground text-xs peer-focus:text-primary absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform px-1 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95"
+        >
+          Nom
+        </label>
+         <div *ngIf="lastNameControl.invalid && (lastNameControl.dirty || lastNameControl.touched)" class="text-red-500 text-xs mt-1">
+          Le nom est requis.
+        </div>
+      </div>
+    </div>
+
+    <div class="relative">
+      <input
+        type="text"
+        id="phone"
+        [(ngModel)]="user.phone"
+        name="phone"
+        class="peer block w-full h-9 px-2 py-1.5"
+        placeholder=" "
+        required
+        pattern="[0-9]{8}"
+        maxlength="8"
+        #phoneControl="ngModel"
+      />
+      <label
+        for="phone"
+        class="bg-background text-muted-foreground text-xs peer-focus:text-primary absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform px-1 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95"
+      >
+        Téléphone
+      </label>
+      <div *ngIf="phoneControl.invalid && (phoneControl.dirty || phoneControl.touched)" class="text-red-500 text-xs mt-1">
+        <div *ngIf="phoneControl.errors?.['required']">Le téléphone est requis.</div>
+        <div *ngIf="phoneControl.errors?.['pattern']">Format de téléphone invalide (8 chiffres).</div>
+      </div>
+    </div>
+
+    <div class="relative">
+      <input
+        type="text"
+        id="address"
+        [(ngModel)]="user.address"
+        name="address"
+        class="peer block w-full h-9 px-2 py-1.5"
+        placeholder=" "
+        required
+        #addressControl="ngModel"
+      />
+      <label
+        for="address"
+        class="bg-background text-muted-foreground text-xs peer-focus:text-primary absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform px-1 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95"
+      >
+        Adresse
+      </label>
+       <div *ngIf="addressControl.invalid && (addressControl.dirty || addressControl.touched)" class="text-red-500 text-xs mt-1">
+          L'adresse est requise.
+        </div>
+    </div>
+  
+
+    <div class="relative">
+      <label for="roles" class="text-muted-foreground block text-xs mb-1">Rôle</label>
+      <select
+        id="roles"
+        [(ngModel)]="user.roles"
+        name="role"
+        class="block w-full p-2 border rounded-md text-sm"
+        (change)="onRoleChange($event)"
+        required
+        #roleControl="ngModel"
+      >
+        <option *ngFor="let role of roless" [ngValue]="role" [attr.data-uuid]="role.uuid">
+          {{ role.role }}
+        </option>
+      </select>
+       <div *ngIf="roleControl.invalid && (roleControl.dirty || roleControl.touched)" class="text-red-500 text-xs mt-1">
+          Le rôle est requis.
+        </div>
+    </div>
+
+    </div>
+
+  <!-- <div class="flex items-center justify-start space-x-2 text-xs">
+    <input
+      id="accept-term"
+      name="accept-term"
+      type="checkbox"
+      [(ngModel)]="user.acceptTerms"
+      required
+      #acceptTermsControl="ngModel"
+    />
+    <label for="accept-term" class="text-muted-foreground">J'accepte les</label>
+    <app-button impact="none" tone="primary" shape="rounded" size="small"> Conditions </app-button>
+     <div *ngIf="acceptTermsControl.invalid && (acceptTermsControl.dirty || acceptTermsControl.touched)" class="text-red-500 text-xs mt-1">
+          Vous devez accepter les conditions.
+        </div>
+  </div> -->
+
+  <div>
+    <app-button full impact="bold" tone="primary" shape="rounded" size="medium" >S'inscrire</app-button>
+  </div>
+
+  <div class="text-muted-foreground flex items-center text-sm">
+    Vous avez déjà un compte ?
+    <app-button routerLink="/auth/sign-in" impact="none" tone="primary" shape="rounded" size="small">
+      Se connecter
+    </app-button>
+  </div>
+</form>
