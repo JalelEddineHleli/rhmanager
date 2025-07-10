@@ -1,18 +1,17 @@
-
-# Use Java 17 Alpine image - small and efficient
+# Utilise une image Java 21 légère basée sur Alpine
 FROM eclipse-temurin:21-jdk-alpine
 
-# Set working directory in the container
+# Définir le dossier de travail
 WORKDIR /app
 
-# Copy everything from your back folder into the container's /app folder
+# Copier le projet dans l'image
 COPY . .
 
-# Make sure the Maven wrapper is executable (very important)
+# Rendre le wrapper Maven exécutable
 RUN chmod +x mvnw
 
-# Build your Spring Boot app without running tests (faster build)
+# Compiler le projet sans lancer les tests
 RUN ./mvnw clean package -DskipTests
 
-# Run the generated jar file (wildcard used to catch the actual jar name)
-CMD ["sh", "-c", "jar"]
+# Trouver automatiquement le fichier .jar et l'exécuter
+CMD ["sh", "-c", "java -jar target/*.jar"]
