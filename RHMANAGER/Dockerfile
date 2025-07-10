@@ -11,4 +11,4 @@ WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
 
 EXPOSE 8091
-CMD ["java", "-jar", "app.jar"]
+CMD ["sh", "-c", "ls -lh /app && java -jar app.jar"]
