@@ -15,4 +15,4 @@ RUN chmod +x mvnw
 RUN ./mvnw clean package -DskipTests
 
 # Run the generated jar file (wildcard used to catch the actual jar name)
-CMD ["sh", "-c", "j
+CMD ["sh", "-c", "jar"]
